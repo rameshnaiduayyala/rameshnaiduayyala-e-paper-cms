@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoute from "../components/ProtectedRoute";
-import AddPapers from "../pages/adminPages/AddPapers";
 
 // Lazy load layouts
 const PublicLayout = lazy(() => import("../components/layouts/PublicLayout"));
@@ -12,6 +11,8 @@ const Home = lazy(() => import("../pages/Home"));
 const PaperViewer = lazy(() => import("../pages/PaperViewer"));
 const AdminLogin = lazy(() => import("../pages/AdminLogin"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
+const AddPapers = lazy(() => import("../pages/adminPages/AddPapers"));
+const UserList = lazy(() => import("../pages/adminPages/users/UserList"));
 
 const AppRoutes = () => {
   return (
@@ -37,6 +38,7 @@ const AppRoutes = () => {
           <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="add-papers" element={<AddPapers />} />
+            <Route path="userList" element={<UserList/>} />
           </Route>
           <Route path="*" element={<Navigate to="/admin/login" />} />
         </Route>

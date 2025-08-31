@@ -1,11 +1,11 @@
 // src/layouts/AdminLayout.tsx
 import { Outlet } from "react-router-dom";
-// import AdminHeader from "../../pages/adminPages/AdminHeader";
+import AdminHeader from "../../pages/adminPages/AdminHeader";
 
 const AdminLayout = () => {
   return (
     <div className="flex min-h-screen">
-      {/* <AdminHeader /> */}
+      <AdminHeader />
       <main className="flex-grow">
         <Outlet />
       </main>

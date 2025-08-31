@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import api from "../api/axios";
 import { ServiceUrl } from "../settings";
 
+
 function Home() {
   const [papers, setPapers] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const { selectedDate } = useOutletContext();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!selectedDate) return;
+    console.log("🔄 Fetching papers for:", selectedDate);
 
     api
       .get(`/papers?date=${selectedDate}`)
@@ -21,16 +21,6 @@ function Home() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 pt-20">
-      <div className="flex justify-end mb-5 ">
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          max={new Date().toISOString().split("T")[0]}
-          className="border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
       {papers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 h-full mb-20">
           {papers.map((paper) => (

@@ -8,7 +8,6 @@ const AddPapers = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Upload file
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -25,7 +24,7 @@ const AddPapers = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("date", date);
-    formData.append("pdf", file); // MUST match Multer field name
+    formData.append("pdf", file);
 
     try {
       setLoading(true);
@@ -44,41 +43,61 @@ const AddPapers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      {/* Upload Form */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-6 flex items-center justify-center">
       <form
         onSubmit={handleUpload}
-        className="bg-white p-6 rounded shadow-md max-w-lg mx-auto mb-8"
+        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg border border-gray-200"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Upload Newspaper PDF</h2>
+        {/* Title */}
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
+          Upload Newspaper PDF
+        </h2>
 
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border p-2 rounded mb-4"
-        />
+        {/* Title Input */}
+        <div className="mb-5">
+          <label className="block mb-2 text-gray-700 font-medium">Title</label>
+          <input
+            type="text"
+            placeholder="Enter paper title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            required
+          />
+        </div>
 
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="w-full border p-2 rounded mb-4"
-        />
+        {/* Date Input */}
+        <div className="mb-5">
+          <label className="block mb-2 text-gray-700 font-medium">Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            required
+          />
+        </div>
 
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-          className="w-full mb-4"
-        />
+        {/* File Input */}
+        <div className="mb-6">
+          <label className="block mb-2 text-gray-700 font-medium">PDF File</label>
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+            className="w-full border border-gray-300 p-3 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100"
+            required
+          />
+        </div>
 
+        {/* Upload Button */}
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 rounded text-white ${
-            loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+          className={`w-full py-3 rounded-lg text-white font-medium text-lg transition ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
           {loading ? "Uploading..." : "Upload PDF"}

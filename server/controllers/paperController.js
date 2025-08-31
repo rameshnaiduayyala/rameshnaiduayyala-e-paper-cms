@@ -67,11 +67,11 @@ exports.getPapers = async (req, res) => {
   try {
     const { date } = req.query;
 
-    const whereClause = {};
+     const whereClause = { published: true };
     if (date) whereClause.date = date;
 
     const papers = await Paper.findAll({
-      where: whereClause && { published: true },
+      where: whereClause,
       order: [["date", "DESC"]],
       include: [
         {

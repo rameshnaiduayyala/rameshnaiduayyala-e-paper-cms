@@ -18,6 +18,10 @@ const User = sequelize.define('User', {
     unique: true,
     validate: { isEmail: true }
   },
+  status: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false
