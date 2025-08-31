@@ -33,7 +33,7 @@ const Header = ({ onDateChange }) => {
               value={selectedDate}
               onChange={handleDateChange}
               max={new Date().toISOString().split("T")[0]}
-s              className="border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <User
               className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-600"
