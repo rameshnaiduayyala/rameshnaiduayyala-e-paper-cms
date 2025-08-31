@@ -1,0 +1,63 @@
+# ====================================
+# Root
+# ====================================
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.lcov
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+
+# ====================================
+# Client (Vite + React + Tailwind)
+# ====================================
+client/node_modules/
+client/dist/
+client/.vite/
+client/.tailwind/
+client/.eslintcache
+client/.stylelintcache
+client/package-lock.json
+client/yarn.lock
+client/pnpm-lock.yaml
+
+
+# ====================================
+# Server (Node + Express)
+# ====================================
+server/node_modules/
+server/dist/
+server/build/
+server/tmp/
+server/temp/
+server/.eslintcache
+server/package-lock.json
+server/yarn.lock
+server/pnpm-lock.yaml

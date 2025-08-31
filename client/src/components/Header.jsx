@@ -1,0 +1,51 @@
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+const Header = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
+
+  return (
+    <header className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <img
+              src="/HindiMilapLogo1.png"
+              alt="Hindi Milap Logo"
+              className="h-10 w-auto"
+            />
+          </div>
+
+          <nav className="hidden md:flex space-x-6">
+            <a href="/" className="text-gray-700 hover:text-blue-600">Home</a>
+            <a href="/archives" className="text-gray-700 hover:text-blue-600">Archives</a>
+            <a href="/about" className="text-gray-700 hover:text-blue-600">About</a>
+            <a href="/contact" className="text-gray-700 hover:text-blue-600">Contact</a>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2"
+            onClick={() => setMobileMenu(!mobileMenu)}
+          >
+            {mobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Nav */}
+      {mobileMenu && (
+        <div className="md:hidden bg-white shadow-md">
+          <nav className="flex flex-col p-4 space-y-3">
+            <a href="/" className="text-gray-700 hover:text-blue-600">Home</a>
+            <a href="/archives" className="text-gray-700 hover:text-blue-600">Archives</a>
+            <a href="/about" className="text-gray-700 hover:text-blue-600">About</a>
+            <a href="/contact" className="text-gray-700 hover:text-blue-600">Contact</a>
+          </nav>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Header;

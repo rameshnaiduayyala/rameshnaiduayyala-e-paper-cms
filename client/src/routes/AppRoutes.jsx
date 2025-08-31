@@ -1,0 +1,48 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import ProtectedRoute from "../components/ProtectedRoute";
+import AddPapers from "../pages/adminPages/AddPapers";
+
+// Lazy load layouts
+const PublicLayout = lazy(() => import("../components/layouts/PublicLayout"));
+const AdminLayout = lazy(() => import("../components/layouts/AdminLayout"));
+
+// Lazy load pages
+const Home = lazy(() => import("../pages/Home"));
+const PaperViewer = lazy(() => import("../pages/PaperViewer"));
+const AdminLogin = lazy(() => import("../pages/AdminLogin"));
+const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
+
+const AppRoutes = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          <div className="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+        </div>
+      }
+    >
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/paper/:id" element={<PaperViewer />} />
+          <Route path="*" element={<Navigate to="/" />} />{" "}
+        </Route>
+
+        {/* Admin routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="login" element={<AdminLogin />} />
+          {/* Protected admin pages */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="add-papers" element={<AddPapers />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/admin/login" />} />
+        </Route>
+      </Routes>
+    </Suspense>
+  );
+};
+
+export default AppRoutes;
