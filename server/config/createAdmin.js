@@ -10,6 +10,7 @@ async function createAdmin() {
       email: "admin@example.com",
       password: hashedPassword,
     });
+    // $2b$10$OycqOe6puAH4NbR3eGfdxOgo2iNfxq4g4zGDkMAHSKWm/ZsP8zvTC
 
     console.log("✅ Admin user created:", admin.username);
   } catch (err) {
