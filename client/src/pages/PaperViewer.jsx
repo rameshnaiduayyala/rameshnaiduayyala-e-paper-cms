@@ -56,7 +56,7 @@ const PaperViewer = () => {
   }, [pages]);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen mt-16">
+    <div className="flex flex-col md:flex-row min-h-screen pt-16">
       {/* Sidebar toggle button (mobile only) */}
       <button
         className="md:hidden fixed top-20 left-4 z-50 bg-white shadow-md p-2 rounded-md"
@@ -114,14 +114,14 @@ const PaperViewer = () => {
       </aside>
 
       {/* Main viewer */}
-      <main className="flex-1 md:ml-44 flex flex-col items-center space-y-8 p-4">
+      <main className="flex-1 md:ml-44 flex flex-col items-center space-y-8">
         {pages.length > 0 ? (
           pages.map((page) => (
             <div
               key={page.id}
               id={`page-${page.pageNumber}`}
               data-page={page.pageNumber}
-              className="border rounded-lg shadow-lg w-full md:w-[890px] md:h-[1050px] h-[500px] overflow-hidden"
+              className=" shadow-lg w-full md:w-[880px] md:h-[1350px] h-[500px] overflow-hidden"
             >
               {visiblePages[page.pageNumber] ? (
                 <iframe
