@@ -67,7 +67,7 @@ const PaperViewer = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static top-16 bottom-0 left-0 z-40 w-64 bg-white shadow-xl border-r p-4 overflow-y-auto transform transition-transform duration-300 ease-in-out
+        className={`fixed top-16 bottom-0 left-0 z-40 w-44 bg-white shadow-xl border-r p-4 overflow-y-auto transform transition-transform duration-300 ease-in-out
           ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
           }`}
@@ -88,7 +88,6 @@ const PaperViewer = () => {
                 const el = document.getElementById(`page-${page.pageNumber}`);
                 if (el) el.scrollIntoView({ behavior: "smooth" });
                 setActivePage(page.pageNumber);
-                setSidebarOpen(false);
               }}
             >
               <div className="relative w-full bg-gray-50 flex items-center justify-center">
@@ -114,7 +113,7 @@ const PaperViewer = () => {
       </aside>
 
       {/* Main viewer */}
-      <main className="flex-1 md:ml-44 flex flex-col items-center space-y-8">
+      <main className="flex-1 md:ml-64 flex flex-col items-center space-y-8">
         {pages.length > 0 ? (
           pages.map((page) => (
             <div
