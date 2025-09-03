@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { toast } from "react-toastify";
+import { useAuth } from "../../contexts/AuthContext";
 
 const AdminPapers = () => {
+  const { role } = useAuth();
   const [papers, setPapers] = useState([]);
 
   const fetchEpapers = async () => {
@@ -45,15 +47,21 @@ const AdminPapers = () => {
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white p-4 rounded shadow-sm">
           <div className="text-sm text-gray-500">Total Papers</div>
-          <div className="text-2xl font-bold text-blue-500">{papers.length}</div>
+          <div className="text-2xl font-bold text-blue-500">
+            {papers?.length}
+          </div>
         </div>
         <div className="bg-white p-4 rounded shadow-sm">
           <div className="text-sm text-gray-500">Published</div>
-          <div className="text-2xl font-bold text-green-500">{papers.filter((paper) => paper.published).length}</div>
+          <div className="text-2xl font-bold text-green-500">
+            {papers?.filter((paper) => paper.published).length}
+          </div>
         </div>
         <div className="bg-white p-4 rounded shadow-sm">
           <div className="text-sm text-gray-500">Drafts</div>
-          <div className="text-2xl font-bold text-red-500">{papers.filter((paper) => !paper.published).length}</div>
+          <div className="text-2xl font-bold text-red-500">
+            {papers?.filter((paper) => !paper.published).length}
+          </div>
         </div>
       </section>
 
@@ -71,7 +79,7 @@ const AdminPapers = () => {
               <th className="px-4 py-3 text-sm font-medium">Title</th>
               <th className="px-4 py-3 text-sm font-medium">Date</th>
               <th className="px-4 py-3 text-sm font-medium">Status</th>
-              <th className="px-4 py-3 text-sm font-medium">Actions</th>
+              {role === "admin" && <th className="px-4 py-3 text-sm font-medium">Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -90,38 +98,40 @@ const AdminPapers = () => {
                     {p.published ? "Published" : "Draft"}
                   </span>
                 </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => alert("Toggle status for " + p.title)}
-                      className="px-3 py-1 text-sm border rounded"
-                    >
-                      Area Maps
-                    </button>
-                    <button
-                      onClick={() => alert("Delete " + p.title)}
-                      className="px-3 py-1 text-sm border rounded text-red-600"
-                    >
-                      Delete
-                    </button>
+                {role === "admin" && (
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => alert("Toggle status for " + p.title)}
+                        className="px-3 py-1 text-sm border rounded"
+                      >
+                        Area Maps
+                      </button>
+                      <button
+                        onClick={() => alert("Delete " + p.title)}
+                        className="px-3 py-1 text-sm border rounded text-red-600"
+                      >
+                        Delete
+                      </button>
 
-                    {p.published === true ? (
-                      <button
-                        onClick={() => unPublishPaper(p.id)}
-                        className="px-3 py-1 text-sm border rounded"
-                      >
-                        Un publish
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => publishPaper(p.id)}
-                        className="px-3 py-1 text-sm border rounded"
-                      >
-                        Publish
-                      </button>
-                    )}
-                  </div>
-                </td>
+                      {p.published === true ? (
+                        <button
+                          onClick={() => unPublishPaper(p.id)}
+                          className="px-3 py-1 text-sm border rounded"
+                        >
+                          Un publish
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => publishPaper(p.id)}
+                          className="px-3 py-1 text-sm border rounded"
+                        >
+                          Publish
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

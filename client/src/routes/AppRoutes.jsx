@@ -28,20 +28,23 @@ const AppRoutes = () => {
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="/paper/:id" element={<PaperViewer />} />
-            <Route path="/login" element={<AdminLogin />} />
-          <Route path="*" element={<Navigate to="/" />} />{" "}
-        </Route>a
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Route>
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
-        
-          {/* Protected admin pages */}
-          <Route element={<ProtectedRoute />}>
+          {/* Protected admin pages → only "admin" role allowed */}
+          <Route
+            element={<ProtectedRoute />}
+          >
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="add-papers" element={<AddPapers />} />
-            <Route path="userList" element={<UserList/>} />
+            <Route path="userList" element={<UserList />} />
           </Route>
-          <Route path="*" element={<Navigate to="/admin/login" />} />
+
+          {/* Fallback for unknown admin routes */}
+          <Route path="*" element={<Navigate to="/unauthorized" />} />
         </Route>
       </Routes>
     </Suspense>

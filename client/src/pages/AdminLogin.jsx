@@ -7,23 +7,34 @@ import api from "../api/axios";
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const response = await api.post("/users/login", { email, password });
-      login(response.data.token);
+      const token = response.data.token;
+
+      // Save token in context + localStorage
+      login(token);
+
       toast.success("Login successful!");
+
       navigate("/admin/dashboard");
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed!");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-200"
@@ -73,9 +84,14 @@ const AdminLogin = () => {
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 font-medium text-lg transition"
+          disabled={loading}
+          className={`w-full py-3 rounded-lg font-medium text-lg transition ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          }`}
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
