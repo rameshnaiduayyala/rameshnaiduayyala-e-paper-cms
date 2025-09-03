@@ -38,7 +38,7 @@ const Header = ({ onDateChange }) => {
             <User
               className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-600"
               onClick={() => {
-                navigator("/admin/login");
+                navigator("/login");
               }}
             />
           </div>

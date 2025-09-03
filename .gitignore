@@ -62,3 +62,4 @@ server/.eslintcache
 server/package-lock.json
 server/yarn.lock
 server/pnpm-lock.yaml
+server/uploads/

@@ -23,7 +23,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
+    <div className="flex justify-center items-center min-h-screen">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-200"

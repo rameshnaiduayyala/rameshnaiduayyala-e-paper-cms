@@ -28,12 +28,13 @@ const AppRoutes = () => {
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Home />} />
           <Route path="/paper/:id" element={<PaperViewer />} />
+            <Route path="/login" element={<AdminLogin />} />
           <Route path="*" element={<Navigate to="/" />} />{" "}
-        </Route>
+        </Route>a
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route path="login" element={<AdminLogin />} />
+        
           {/* Protected admin pages */}
           <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<AdminDashboard />} />

@@ -28,7 +28,7 @@ function Home() {
               className="cursor-pointer group flex flex-col items-center text-center bg-white p-3 rounded-lg shadow-md hover:shadow-xl transition-shadow border border-gray-200 max-w-[280px]"
               onClick={() => navigate(`/paper/${paper.id}`)}
             >
-              <h3 className="text-base font-semibold text-gray-900 mb-2">
+              <h3 className="text-base font-semibold text-gray-900">
                 {paper.title}
               </h3>
 
@@ -46,7 +46,7 @@ function Home() {
                 </div>
               )}
 
-              <p className="text-gray-500 mt-2 text-sm">{paper.date}</p>
+              <p className="text-gray-500 text-sm">{paper.date}</p>
             </div>
           ))}
         </div>
