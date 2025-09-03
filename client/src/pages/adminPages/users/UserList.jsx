@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   const fetchUsers = async () => {
@@ -21,9 +23,12 @@ const UserList = () => {
       <section className="bg-white rounded shadow-sm overflow-hidden ">
         <div className="p-4 border-b flex items-center justify-between">
           <h3 className="font-medium">List of Users</h3>
-          <div className="text-sm text-gray-500">
-            Showing {users.length} results
-          </div>
+          <button
+            onClick={() => navigate("/admin/add-user")}
+            className="px-3 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+          >
+            + Add User
+          </button>
         </div>
 
         <table className="min-w-full text-left">
@@ -59,7 +64,7 @@ const UserList = () => {
                       onClick={() => alert("Toggle status for " + p.username)}
                       className="px-3 py-1 text-sm border rounded"
                     >
-                     Edit
+                      Edit
                     </button>
                     <button
                       onClick={() => alert("Delete " + p.username)}

@@ -7,7 +7,7 @@ const JWT_SECRET = "123456789abcdef";
 // Register User
 exports.register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email,role, password } = req.body;
 
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser)
@@ -18,6 +18,7 @@ exports.register = async (req, res) => {
     const user = await User.create({
       username,
       email,
+      role,
       password: hashedPassword,
     });
 

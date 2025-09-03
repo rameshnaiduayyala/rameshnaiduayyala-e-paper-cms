@@ -13,6 +13,7 @@ const AdminLogin = lazy(() => import("../pages/AdminLogin"));
 const AdminDashboard = lazy(() => import("../pages/AdminDashboard"));
 const AddPapers = lazy(() => import("../pages/adminPages/AddPapers"));
 const UserList = lazy(() => import("../pages/adminPages/users/UserList"));
+const AddUser = lazy(() => import("../pages/adminPages/AddUser"));
 
 const AppRoutes = () => {
   return (
@@ -35,12 +36,11 @@ const AppRoutes = () => {
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
           {/* Protected admin pages → only "admin" role allowed */}
-          <Route
-            element={<ProtectedRoute />}
-          >
+          <Route element={<ProtectedRoute />}>
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="add-papers" element={<AddPapers />} />
             <Route path="userList" element={<UserList />} />
+            <Route path="add-user" element={<AddUser />} />
           </Route>
 
           {/* Fallback for unknown admin routes */}
