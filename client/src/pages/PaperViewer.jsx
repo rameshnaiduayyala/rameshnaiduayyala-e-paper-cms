@@ -3,12 +3,14 @@ import { useEffect, useState, useRef } from "react";
 import api from "../api/axios";
 import { ServiceUrl } from "../settings";
 import { useParams } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 const PaperViewer = () => {
   const { id } = useParams();
   const [pages, setPages] = useState([]);
   const [activePage, setActivePage] = useState(null);
   const [visiblePages, setVisiblePages] = useState({});
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const observer = useRef(null);
 
   useEffect(() => {
@@ -27,7 +29,6 @@ const PaperViewer = () => {
   }, [id]);
 
   useEffect(() => {
-    // Setup IntersectionObserver for lazy loading
     observer.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -39,7 +40,7 @@ const PaperViewer = () => {
           }
         });
       },
-      { rootMargin: "200px 0px" } // preload 200px before entering
+      { rootMargin: "200px 0px" }
     );
 
     return () => observer.current?.disconnect();
@@ -55,9 +56,22 @@ const PaperViewer = () => {
   }, [pages]);
 
   return (
-    <div className="flex min-h-screen mt-16">
-      {/* Sidebar (thumbnails) */}
-      <aside className="w-44 bg-white shadow-xl border-r p-4 overflow-y-auto fixed top-16 bottom-0">
+    <div className="flex flex-col md:flex-row min-h-screen mt-16">
+      {/* Sidebar toggle button (mobile only) */}
+      <button
+        className="md:hidden fixed top-20 left-4 z-50 bg-white shadow-md p-2 rounded-md"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed md:static top-16 bottom-0 left-0 z-40 w-64 bg-white shadow-xl border-r p-4 overflow-y-auto transform transition-transform duration-300 ease-in-out
+          ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          }`}
+      >
         <h2 className="text-sm font-semibold mb-3 text-gray-700 uppercase tracking-wide">
           Pages
         </h2>
@@ -74,9 +88,10 @@ const PaperViewer = () => {
                 const el = document.getElementById(`page-${page.pageNumber}`);
                 if (el) el.scrollIntoView({ behavior: "smooth" });
                 setActivePage(page.pageNumber);
+                setSidebarOpen(false);
               }}
             >
-              <div className="relative w-full aspect-[8.5/11] bg-gray-50 flex items-center justify-center">
+              <div className="relative w-full bg-gray-50 flex items-center justify-center">
                 <img
                   src={`${ServiceUrl}${page.imagePath}`}
                   alt={`Thumbnail ${page.pageNumber}`}
@@ -99,31 +114,22 @@ const PaperViewer = () => {
       </aside>
 
       {/* Main viewer */}
-      <main className="flex-1 ml-60 flex flex-col items-center space-y-8">
+      <main className="flex-1 md:ml-44 flex flex-col items-center space-y-8 p-4">
         {pages.length > 0 ? (
           pages.map((page) => (
             <div
               key={page.id}
               id={`page-${page.pageNumber}`}
               data-page={page.pageNumber}
-              className="border rounded-lg shadow-lg w-[890px] max-w-full"
+              className="border rounded-lg shadow-lg w-full md:w-[890px] md:h-[1050px] h-[500px] overflow-hidden"
             >
               {visiblePages[page.pageNumber] ? (
-                page.pdfPagePath ? (
-                  <iframe
-                    src={`${ServiceUrl}/uploads/${page.pdfPagePath}#toolbar=0&navpanes=0&scrollbar=0`}
-                    className="w-full h-[1390px] border-0"
-                    title={`Page ${page.pageNumber}`}
-                    loading="lazy"
-                  />
-                ) : (
-                  <img
-                    src={`${ServiceUrl}${page.imagePath}`}
-                    alt={`Page ${page.pageNumber}`}
-                    className="w-full border-0"
-                    loading="lazy"
-                  />
-                )
+                <iframe
+                  src={`${ServiceUrl}/uploads/${page.pdfPagePath}#toolbar=0&navpanes=0&scrollbar=0`}
+                  className="w-full h-full border-0"
+                  title={`Page ${page.pageNumber}`}
+                  loading="lazy"
+                />
               ) : (
                 <div className="w-full h-[500px] bg-gray-100 animate-pulse flex items-center justify-center text-gray-400">
                   Loading...

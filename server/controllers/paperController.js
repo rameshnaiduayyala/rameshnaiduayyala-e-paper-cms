@@ -107,6 +107,41 @@ exports.getPapers = async (req, res) => {
   }
 };
 
+exports.getPaperById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const papers = await Paper.findAll({
+      where: { id },
+      order: [["date", "DESC"]],
+      include: [
+        {
+          model: Page,
+          as: "pages",
+          where: { pageNumber: 1 },
+          required: false,
+        },
+      ],
+    });
+
+    const result = papers.map((paper) => ({
+      id: paper.id,
+      title: paper.title,
+      date: paper.date,
+      pdfPath: paper.pdfPath,
+      thumbnail: paper.thumbnail || (paper.pages[0]?.imagePath || null),
+      firstPage: paper.pages.length > 0 ? paper.pages[0].pdfPagePath : null,
+      createdAt: paper.createdAt,
+      updatedAt: paper.updatedAt,
+    }));
+
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch papers" });
+  }
+};
+
 exports.getAllPapers = async (req, res) => {
   try {
     const { date } = req.query;
