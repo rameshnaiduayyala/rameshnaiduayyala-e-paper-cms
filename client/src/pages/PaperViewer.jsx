@@ -120,7 +120,7 @@ const PaperViewer = () => {
               key={page.id}
               id={`page-${page.pageNumber}`}
               data-page={page.pageNumber}
-              className=" shadow-lg w-full md:w-[880px] md:h-[1350px] h-[500px] overflow-hidden"
+              className=" shadow-lg w-full md:w-[850px] md:h-[1340px] h-[500px] overflow-hidden"
             >
               {visiblePages[page.pageNumber] ? (
                 <iframe
