@@ -4,7 +4,7 @@ const path = require('path');
 const { uploadPaper, getPapers, getPages, getAllPapers,publishChenge,getPaperById } = require('../controllers/paperController');
 
 const upload = multer({
-  dest: path.join(__dirname, "..", "temp") // Temporary folder
+  dest: path.join(__dirname, "..", "temp")
 });
 
 const router = express.Router();
