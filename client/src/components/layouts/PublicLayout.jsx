@@ -11,8 +11,8 @@ const PublicLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header onDateChange={setSelectedDate} />
-      <main className="flex-grow container mt-4">
-        <Outlet context={{ selectedDate }} />   {/* ✅ exposes to Home */}
+      <main className="flex-grow">
+        <Outlet context={{ selectedDate }} />
       </main>
     </div>
   );
